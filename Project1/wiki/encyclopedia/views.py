@@ -51,3 +51,20 @@ def create_entry(request):
             return HttpResponseRedirect(reverse("entry", kwargs={"title": title}))
     else:
         return render(request, "encyclopedia/create_entry.html")
+
+def edit_entry(request, title):
+    if request.method == "POST":
+        content = request.POST.get("content")
+        util.save_entry(title, content)
+        return HttpResponseRedirect(reverse("entry", kwargs={"title": title}))
+    else:
+        content = util.get_entry(title)
+        if content is None:
+            return render(request, "encyclopedia/error.html", {
+                "message": "The requested page was not found."
+            })
+        else:
+            return render(request, "encyclopedia/edit_entry.html", {
+                "title": title,
+                "content": content
+            })

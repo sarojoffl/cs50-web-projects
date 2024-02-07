@@ -7,5 +7,6 @@
 {% block body %}
 <article>
     {{ content|safe }}
+    <a href="{% url 'edit_entry' title=title %}" class="btn btn-secondary">Edit</a>
 </article>
 {% endblock %}
