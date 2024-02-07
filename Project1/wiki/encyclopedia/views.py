@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.contrib import messages
 from . import util
 import markdown2
+import random
 
 def index(request):
     return render(request, "encyclopedia/index.html", {
@@ -68,3 +69,8 @@ def edit_entry(request, title):
                 "title": title,
                 "content": content
             })
+
+def random_entry(request):
+    entries = util.list_entries()
+    random_entry = random.choice(entries)
+    return HttpResponseRedirect(reverse('entry', kwargs={'title': random_entry}))
