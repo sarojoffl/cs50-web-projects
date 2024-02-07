@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.contrib import messages
 from . import util
 import markdown2
 
@@ -34,3 +35,19 @@ def search(request):
             "entries": matching_entries,
             "query": query
         })
+
+def create_entry(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        if util.get_entry(title) is not None:
+            messages.error(request, "An entry with this title already exists.")
+            return render(request, "encyclopedia/create_entry.html", {
+                "title": title,
+                "content": content
+            })
+        else:
+            util.save_entry(title, content)
+            return HttpResponseRedirect(reverse("entry", kwargs={"title": title}))
+    else:
+        return render(request, "encyclopedia/create_entry.html")
