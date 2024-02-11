@@ -1,7 +1,16 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
+<div class="container mt-4">
     <h2>Active Listings</h2>
-
-    TODO
+    <div class="row">
+        {% for listing in active_listings %}
+        {% include "auctions/details.html" %}
+        {% empty %}
+        <div class="col-12">
+            <p>No active listings available.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

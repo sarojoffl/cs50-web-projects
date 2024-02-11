@@ -1,0 +1,14 @@
+<div class="col-md-4 mb-3">
+    <div class="card">
+        <img src="{{ listing.image_url }}" class="img-responsive" alt="{{ listing.title }}">
+        <div class="card-body">
+            <h5 class="card-title">{{ listing.title }}</h5>
+            <p class="card-text">{{ listing.description|truncatechars:100 }}</p>
+            <p class="text-muted">Price: ${{ listing.current_bid|default:listing.starting_bid }}</p>
+            <a href="{% url 'listing_detail' listing.id %}" class="btn btn-primary">View Listing</a>
+        </div>
+        <div class="card-footer text-muted">
+            Created {{ listing.created_at|date:"M d, Y, P" }}
+        </div>
+    </div>
+</div>

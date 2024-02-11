@@ -1,0 +1,22 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="listing-detail">
+        <!-- Listing Details -->
+        <h2>{{ listing.title }}</h2>
+            {% if listing.image_url %}
+                <img src="{{ listing.image_url }}" alt="{{ listing.title }}" class="img-fluid">
+            {% endif %}
+        <p class="description">{{ listing.description }}</p>
+        <p class="price">Current price: ${{ listing.current_bid|default:listing.starting_bid }}</p>
+
+        <h3>Item Details</h3>
+        <ul>
+            <li>Category: <a href="{% url 'category_view' category_name=listing.category %}">{{ listing.category }}</a></li>
+            <li>Created by: {{ listing.creator }}</li>
+            <li>Created on: {{ listing.created_at }}</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

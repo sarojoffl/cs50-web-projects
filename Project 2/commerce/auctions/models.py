@@ -8,6 +8,7 @@ class Listing(models.Model):
     title = models.CharField(max_length=64)
     description = models.TextField()
     starting_bid = models.DecimalField(max_digits=9, decimal_places=2)
+    current_bid = models.DecimalField(max_digits=12, decimal_places=2, blank=True, null=True)
     image_url = models.URLField(blank=True, null=True)
     category = models.CharField(max_length=64, blank=True, null=True)
     active = models.BooleanField(default=True)
@@ -34,3 +35,4 @@ class Comment(models.Model):
 
     def __str__(self):
         return f"{self.user}: {self.comment_text}"
+    
