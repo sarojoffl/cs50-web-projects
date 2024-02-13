@@ -1,6 +1,6 @@
 <div class="col-md-4 mb-3">
     <div class="card">
-        <img src="{{ listing.image_url }}" class="img-responsive" alt="{{ listing.title }}">
+        <img src="{{ listing.image_url }}" alt="{{ listing.title }}" style="width: 300px; height: auto;">
         <div class="card-body">
             <h5 class="card-title">{{ listing.title }}</h5>
             <p class="card-text">{{ listing.description|truncatechars:100 }}</p>

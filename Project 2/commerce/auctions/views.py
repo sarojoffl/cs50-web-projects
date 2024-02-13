@@ -106,5 +106,23 @@ def listing_detail(request, listing_id):
     return render(request, 'auctions/listing_detail.html', {'listing': listing})
 
 def category_view(request, category_name):
-    listings = Listing.objects.filter(category=category_name)
+    listings = Listing.objects.filter(category=category_name, active=True)
     return render(request, 'auctions/category_listings.html', {'listings': listings, 'category_name': category_name})
+
+def category_list(request):
+    categories = Listing.objects.values_list('category', flat=True).distinct()
+    return render(request, 'auctions/category_list.html', {'categories': categories})
+
+@login_required
+def view_watchlist(request):
+    user_watchlist = request.user.watchlist.all()
+    return render(request, 'auctions/watchlist.html', {'watchlist': user_watchlist})
+
+@login_required
+def toggle_watchlist(request, listing_id):
+    listing = get_object_or_404(Listing, pk=listing_id)
+    if listing in request.user.watchlist.all():
+        request.user.watchlist.remove(listing)
+    else:
+        request.user.watchlist.add(listing)
+    return redirect('listing_detail', listing_id=listing_id)

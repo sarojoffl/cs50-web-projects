@@ -6,7 +6,7 @@
         <!-- Listing Details -->
         <h2>{{ listing.title }}</h2>
             {% if listing.image_url %}
-                <img src="{{ listing.image_url }}" alt="{{ listing.title }}" class="img-fluid">
+                <img src="{{ listing.image_url }}" alt="{{ listing.title }}" style="width: 300px; height: auto;">
             {% endif %}
         <p class="description">{{ listing.description }}</p>
         <p class="price">Current price: ${{ listing.current_bid|default:listing.starting_bid }}</p>
@@ -17,6 +17,13 @@
             <li>Created by: {{ listing.creator }}</li>
             <li>Created on: {{ listing.created_at }}</li>
         </ul>
+        {% if user.is_authenticated %}
+            {% if listing in user.watchlist.all %}
+                <a href="{% url 'toggle_watchlist' listing.id %}" class="btn btn-warning">Remove from Watchlist</a>
+            {% else %}
+                <a href="{% url 'toggle_watchlist' listing.id %}" class="btn btn-success">Add to Watchlist</a>
+            {% endif %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}
